@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage ("Build") {
             steps {
-                git 'https://github.com/Gouravkumar717/Bank-Project.git'
+                git url: 'https://github.com/Gouravkumar717/pro1.git', branch: 'main', credentialsId: 'git-creds'
                 sh "mvn -Dmaven.test.failure.ignore=true clean package"
             }
         }
