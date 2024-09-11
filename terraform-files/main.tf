@@ -1,22 +1,23 @@
 resource "aws_instance" "test-server" {
-  ami           = "ami-0e86e20dae9224db8"
-  instance_type = "t2.micro"
-  key_name      = "myedkey"
+  ami                    = "ami-0e86e20dae9224db8"
+  instance_type          = "t2.micro"
+  key_name               = "myedkey"
   vpc_security_group_ids = ["sg-09361e08bf2cb972b"]
+  subnet_id              = "08b03774eae1e3cba"  # Specify the correct subnet here
 
   connection {
     type        = "ssh"
     user        = "ubuntu"
-    private_key = file("./myedkey.pem")  # Corrected private key path
+    private_key = file("myedkey.pem")
     host        = self.public_ip
   }
 
   provisioner "remote-exec" {
-    inline = ["echo 'wait to start the instance' "]
+    inline = ["echo 'wait to start the instance'"]
   }
 
   tags = {
-    Name = "test-server"  # Corrected tag name spelling
+    Name = "test-server"
   }
 
   provisioner "local-exec" {
