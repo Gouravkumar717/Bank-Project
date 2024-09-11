@@ -27,5 +27,19 @@ pipeline {
                 sh "docker build -t gourav787/bank-project:1.0 ."
             }
         }
+        stage ('Docker-login') {
+            steps {
+                // Login to Docker using credentials stored in Jenkins
+                withCredentials([usernamePassword(credentialsId: 'Docker-cred', passwordVariable: 'dockerpassword', usernameVariable: 'dockerlogin')]) {
+                    sh "docker login -u ${dockerlogin} -p ${dockerpassword}"
+                }
+            }
+        }
+        stage ("Docker-push") {
+            steps {
+                // Push Docker image to DockerHub
+                sh "docker push gourav787/bank-project:1.0"
+            }
+        }
     }
 }
