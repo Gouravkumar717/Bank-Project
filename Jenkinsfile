@@ -1,17 +1,17 @@
 pipeline {
     agent any
-
     tools {
         maven "M2_HOME"
     }
-
     stages {
-        stage ("Build") {
+        stage ("Clone and Build") {
             steps {
-                git url: 'https://github.com/Gouravkumar717/pro1.git', branch: 'main', credentialsId: 'git-creds'
+                // Use credentials and specify the correct branch
+                git branch: 'main', url: 'https://github.com/Gouravkumar717/Bank-Project.git', credentialsId: 'git-cread'
+                
+                // Build the project with Maven
                 sh "mvn -Dmaven.test.failure.ignore=true clean package"
             }
         }
-        
     }
 }
